@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Cash Flow Harian UMKM</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --success: #16a34a;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 20px auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 16px;
+        }
+
+        header h1 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 24px;
+            padding: 20px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .result-item.total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .status-surplus {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .status-defisit {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .status-impas {
+            background: #e2e8f0;
+            color: var(--muted);
+        }
+
+        .analysis {
+            margin-top: 12px;
+            font-size: 0.88rem;
+            color: var(--muted);
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>💸 Kalkulator Cash Flow Harian</h1>
+            <p>Alat Analisis Pencatatan Pemasukan & Pengeluaran Kas UMKM</p>
+        </header>
+
+        <form id="cashflow-form">
+            <div class="form-group">
+                <label for="saldo-awal">Saldo Kas Awal (Rp):</label>
+                <input type="number" id="saldo-awal" placeholder="Contoh: 500000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pemasukan">Total Pemasukan Hari Ini (Rp):</label>
+                <input type="number" id="pemasukan" placeholder="Contoh: 1200000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pengeluaran">Total Pengeluaran / Biaya Hari Ini (Rp):</label>
+                <input type="number" id="pengeluaran" placeholder="Contoh: 800000" required>
+            </div>
+
+            <button type="button" onclick="hitungCashFlow()">Hitung Arus Kas 📊</button>
+        </form>
+
+        <div id="result" class="result-box">
+            <div class="result-item">
+                <span>Saldo Kas Awal:</span>
+                <span id="res-saldo-awal">Rp 0</span>
+            </div>
+            <div class="result-item">
+                <span>Pemasukan (+) :</span>
+                <span id="res-pemasukan" style="color: var(--success);">Rp 0</span>
+            </div>
+            <div class="result-item">
+                <span>Pengeluaran (-) :</span>
+                <span id="res-pengeluaran" style="color: var(--danger);">Rp 0</span>
+            </div>
+            <div class="result-item total">
+                <span>Saldo Kas Akhir:</span>
+                <span id="res-saldo-akhir">Rp 0</span>
+            </div>
+            
+            <div style="text-align: center; margin-top: 15px;">
+                <span id="status-badge" class="status-badge"></span>
+            </div>
+
+            <div class="analysis" id="analysis-text">
+                <!-- Analisis manajemen akan muncul di sini -->
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Sucii • Portofolio Bisnis Digital</p>
+        </footer>
+    </div>
+
+    <script>
+        function formatRupiah(angka) {
+            return 'Rp ' + Number(angka).toLocaleString('id-ID');
+        }
+
+        function hitungCashFlow() {
+            const saldoAwal = parseFloat(document.getElementById('saldo-awal').value) || 0;
+            const pemasukan = parseFloat(document.getElementById('pemasukan').value) || 0;
+            const pengeluaran = parseFloat(document.getElementById('pengeluaran').value) || 0;
+
+            const arusKasBersih = pemasukan - pengeluaran;
+            const saldoAkhir = saldoAwal + arusKasBersih;
+
+            document.getElementById('res-saldo-awal').innerText = formatRupiah(saldoAwal);
+            document.getElementById('res-pemasukan').innerText = formatRupiah(pemasukan);
+            document.getElementById('res-pengeluaran').innerText = formatRupiah(pengeluaran);
+            document.getElementById('res-saldo-akhir').innerText = formatRupiah(saldoAkhir);
+
+            const badge = document.getElementById('status-badge');
+            const analysis = document.getElementById('analysis-text');
+
+            if (arusKasBersih > 0) {
+                badge.innerText = 'STATUS: SURPLUS (KAS POSITIF)';
+                badge.className = 'status-badge status-surplus';
+                analysis.innerHTML = `<strong>Rekomendasi Manajemen:</strong> Arus kas harian bernilai positif sebesar <strong>${formatRupiah(arusKasBersih)}</strong>. Saldo kas meningkat. Pertahankan efisiensi biaya operasional dan pertimbangkan untuk menabung sebagian keuntungan sebagai dana cadangan usaha.`;
+            } else if (arusKasBersih < 0) {
+                badge.innerText = 'STATUS: DEFISIT (KAS NEGATIF)';
+                badge.className = 'status-badge status-defisit';
+                analysis.innerHTML = `<strong>Rekomendasi Manajemen:</strong> Pengeluaran hari ini melebihi pemasukan sebesar <strong>${formatRupiah(Math.abs(arusKasBersih))}</strong>. Evaluasi kembali pos pengeluaran yang tidak mendesak dan tingkatkan strategi penjualan harian untuk menutupi defisit kas.`;
+            } else {
+                badge.innerText = 'STATUS: IMPAS (CASH NEUTRAL)';
+                badge.className = 'status-badge status-impas';
+                analysis.innerHTML = `<strong>Rekomendasi Manajemen:</strong> Pemasukan dan pengeluaran seimbang. Saldo kas tidak berubah dari awal hari. Coba tingkatkan promosi produk untuk mendapatkan nilai arus kas bersih yang positif.`;
+            }
+
+            document.getElementById('result').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
