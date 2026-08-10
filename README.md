@@ -1,24 +1,18 @@
-# 💸 Kalkulator Cash Flow Harian UMKM
+# 💰 Cash Flow Calculator
 
-Aplikasi web sederhana interaktif yang dirancang untuk membantu pemilik usaha kecil (UMKM) dan siswa manajemen dalam melakukan pencatatan serta analisis arus kas (*cash flow*) harian secara terstruktur dan otomatis.
+An interactive, client-side web application designed to compute operational cash flow, estimate fixed and variable expenses, and evaluate real-time net liquidity.
 
----
-
-## 🚀 Fitur Utama
-- **Pencatatan Ringkas:** Input saldo awal, total pemasukan, dan total pengeluaran harian.
-- **Perhitungan Otomatis:** Menghitung saldo kas akhir dan arus kas bersih secara akurat.
-- **Indikator Status Keuangan:** Menampilkan badge otomatis (*Surplus*, *Defisit*, atau *Impas*).
-- **Rekomendasi Manajemen:** Memberikan saran evaluasi keuangan operasional berdasarkan hasil pencatatan kas.
+🚀 **Live Demo**: [https://sucii-hub.github.io/cash-flow-calculator/](https://sucii-hub.github.io/cash-flow-calculator/)
 
 ---
 
-## 🌐 Link Akses Website
-Cobalah aplikasinya secara langsung melalui link berikut:  
-👉 **[Kalkulator Cash Flow Online](https://sucii-hub.github.io/kalkulator-cashflow/)**
+## ⚡ Key Features
+- **Real-Time Computation**: Automatically calculates net cash flow based on revenue vs. fixed and variable costs.
+- **Financial Status Indicators**: Instant visual indicators (Surplus, Neutral, Deficit) with intuitive status feedback.
+- **Modern UI**: Clean, dark-mode aesthetic with a responsive user interface built for all devices.
+
+## 🛠️ Tech Stack
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6+)
 
 ---
-
-## 🛠️ Teknologi & Skill
-- **Frontend:** HTML5, CSS3, JavaScript
-- **Kompetensi Bisnis:** Manajemen Keuangan, Cash Flow Management, Bisnis Digital
-- **Hosting:** GitHub Pages
+*Developed by [Sucii](https://github.com/sucii-hub)*
